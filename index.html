@@ -4,6 +4,7 @@
    <title>Days to election&hellip;</title>
    <meta charset='utf-8'>
    <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link href="https://assets.digital.cabinet-office.gov.uk/static/govuk-template-6820d35a129a3ffde628d8447156c5dc.css" media="screen" rel="stylesheet" type="text/css">
    <style type="text/css">
 
       * {
@@ -19,15 +20,17 @@
       html {
         background: black;
         color: white;
+      }
+
+      body#election {
+        padding: 45px;
+        background: black;
+        color: white;
         font-family: nta;
         font-size: 60px;
         line-height: 1;
         -webkit-font-smoothing: antialiased;
         word-spacing: 0.1em;
-      }
-
-      body {
-        padding: 45px;
       }
 
       h1, h2, h3, h4, h5, h6,
@@ -70,16 +73,44 @@
    </style>
 
 </head>
-<body>
-  <p><strong>
+<body id ="election">
+
+<p><strong>
 <script type="text/javascript">
-today = new Date();
-election_day = new Date("May 7, 2015");
-ms_per_day = 24 * 60 * 60 * 1000 ;
-time_left = (election_day.getTime() - today.getTime());
-e_days_left = time_left / ms_per_day;
-days_left = Math.floor(e_days_left);
-document.write(days_left);</script>
-days</strong> until the election</p>
+var today = new Date();
+var day_string = "days";
+var para_output = "until the election";
+var election_day = new Date("May 7, 2015");
+var ms_per_day = 24 * 60 * 60 * 1000 ;
+var time_left = (election_day.getTime() - today.getTime());
+var e_days_left = time_left / ms_per_day;
+var days_left = Math.floor(e_days_left);
+var e_hrs_left = (e_days_left - days_left)*24;
+var hrs_left = Math.floor(e_hrs_left);
+var mins_left = Math.floor((e_hrs_left - hrs_left)*60);
+
+if(days_left == 1) {
+  day_string = "day";
+}
+
+var days_left_output = days_left + " " + day_string;
+
+if(today == election_day) {
+  days_left_output = days_left + " " + day_string;
+  var para_output = "until the next election";
+}
+
+if(today > election_day) {
+   days_left_output = "5 years";
+   var para_output = "until the next election";
+}
+
+document.write(days_left_output);</script>
+</strong>
+<script type="text/javascript">
+document.write(para_output);
+</script>
+</p>
+
 </body>
 </html>
