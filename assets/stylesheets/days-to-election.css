@@ -1,0 +1,42 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  font-style: normal;
+  font-weight: normal;
+}
+
+html {
+  position: absolute;
+  display: table;
+  width: 100%;
+  height: 100%;
+}
+
+body#election {
+  display: table-cell;
+  vertical-align: middle;
+  padding-left: 80px;
+  background: black;
+  color: white;
+  font-family: nta;
+  font-size: 80px;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  word-spacing: 0.1em;
+}
+
+h1 {
+  display: block;
+  font-size: 4em;
+  word-spacing: 0em;
+  position: relative;
+  left: -0.045em;
+  font-weight: bold;
+}
+
+p {
+  font-size: 1em;
+}

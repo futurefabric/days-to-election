@@ -5,112 +5,39 @@
    <meta charset='utf-8'>
    <meta name="viewport" content="width=device-width, initial-scale=1">
    <link href="https://assets.digital.cabinet-office.gov.uk/static/fonts-83e596ae63d072e22b7f34d2b5482bde.css" media="screen" rel="stylesheet" type="text/css">
-   <style type="text/css">
-
-      * {
-        margin: 0;
-        padding: 0;
-        font-family: inherit;
-        font-size: inherit;
-        line-height: inherit;
-        font-style: normal;
-        font-weight: normal;
-      }
-
-      html {
-        background: black;
-        color: white;
-      }
-
-      body#election {
-        padding-left: 80px;
-        background: black;
-        color: white;
-        font-family: nta;
-        font-size: 80px;
-        line-height: 1;
-        -webkit-font-smoothing: antialiased;
-        word-spacing: 0.1em;
-      }
-
-      h1, h2, h3, h4, h5, h6,
-      p, ul, ol, pre, blockquote {
-        margin: 0 auto;
-      }
-
-      h1 {
-        text-transform: uppercase;
-        margin-bottom: 18px;
-      }
-
-      img {
-        margin: 36px auto 9px;
-        max-width: 100%;
-        height: auto;
-      }
-
-      html {
-        position: absolute;
-        display: table;
-        width: 100%;
-        height: 100%;
-      }
-
-      body {
-        display: table-cell;
-        vertical-align: middle;
-      }
-
-      strong {
-        display: block;
-        font-size: 4em;
-        word-spacing: 0em;
-        position: relative;
-        left: -0.045em;
-        font-weight: bold;
-      }
-
-   </style>
-
+   <link href="assets/stylesheets/days-to-election.css" media="screen" rel="stylesheet" type="text/css">
+   <script type="text/javascript" src="assets/javascripts/moment.min.js"></script>
+   <script type="text/javascript" src="assets/javascripts/moment-range.min.js"></script>
 </head>
-<body id ="election">
 
-<p><strong>
+<body id="election">
+
+<h1 id="time_to_go"></h1>
+<p id="until"></p>
+
 <script type="text/javascript">
-var today = new Date();
-var day_string = "days";
-var para_output = "until the election";
-var election_day = new Date("May 7, 2015");
-var ms_per_day = 24 * 60 * 60 * 1000 ;
-var time_left = (election_day.getTime() - today.getTime());
-var e_days_left = time_left / ms_per_day;
-var days_left = Math.floor(e_days_left);
-var e_hrs_left = (e_days_left - days_left)*24;
-var hrs_left = Math.floor(e_hrs_left);
-var mins_left = Math.floor((e_hrs_left - hrs_left)*60);
 
-if(days_left == 1) {
-  day_string = "day";
+var time_to_election = function() {
+  var today         = new Date();
+  var election_date = new Date("May 7, 2015");
+  var time_to_go    = moment.range(today, election_date);
+
+  var days    = time_to_go.diff('days');
+  var hours   = time_to_go.diff('hours');
+  var minutes = time_to_go.diff('minutes');
+  var seconds = time_to_go.diff('seconds');
+
+  document.getElementById('time_to_go').innerHTML = days + " days";
+  document.getElementById('until').innerHTML = "until the election";
 }
 
-var days_left_output = days_left + " " + day_string;
+var refresh_rate = 600; // every n seconds
+refresh_rate_ms = 1000 * refresh_rate;
+setInterval(time_to_election, refresh_rate_ms);
 
-if(today == election_day) {
-  days_left_output = days_left + " " + day_string;
-  var para_output = "until the next election";
-}
+time_to_election();
 
-if(today > election_day) {
-   days_left_output = "5 years";
-   var para_output = "until the next election";
-}
-
-document.write(days_left_output);</script>
-</strong>
-<script type="text/javascript">
-document.write(para_output);
 </script>
-</p>
 
 </body>
 </html>
